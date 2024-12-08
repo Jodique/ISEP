@@ -1,0 +1,70 @@
+
+Table d_calendar {
+  date date [pk, not null]
+  year integer [not null]
+  month integer [not null]
+  week integer [not null]
+  day integer [not null]
+  month_n integer [not null]
+  week_n integer [not null]
+  day_n integer [not null]
+}
+
+Table d_customer {
+  id_customer integer [pk, not null]
+  location_id integer
+  first_name character varying [not null]
+  last_name character varying [not null]
+  id_card character varying [not null]
+  birth_date date [not null]
+  address_street character varying
+  start_date date [not null]
+  end_date date [not null]
+  active character (1) [not null]
+  etl_ts timestamp [not null]
+}
+
+Table d_location {
+  id_location integer [pk, not null]
+  country character varying [not null]
+  region character varying [not null]
+  city character varying [not null]
+  active character (1) [not null]
+  etl_ts timestamp [not null]
+}
+
+Table d_vehicle {
+  id_vehicle integer [pk, not null]
+  plate character varying [not null]
+  brand character varying [not null]
+  model character varying [not null]
+  fuel character varying [not null]
+  location_id integer
+  start_rent date [not null]
+  end_rent date [not null]
+  etl_ts timestamp [not null]
+}
+
+Table f_booking {
+  id_booking integer [pk, not null]
+  customer_id integer
+  vehicle_id integer
+  date date [not null]
+  customer character varying [not null]
+  brand_model character varying [not null]
+  vehicle_plate character varying [not null]
+  start_rent date [not null]
+  end_rent date [not null]
+  active character (1) [not null]
+  etl_ts timestamp [not null]
+}
+
+Ref t_booking_customer_id_fkeyd_customer.id_customer  f_booking.customer_id
+
+Ref t_booking_date_fkeyd_calendar.date  f_booking.date
+
+Ref t_booking_vehicle_id_fkeyd_vehicle.id_vehicle  f_booking.vehicle_id
+
+Ref t_customer_location_id_fkeyd_location.id_location  d_customer.location_id
+
+Ref t_vehicle_location_id_fkeyd_location.id_location  d_vehicle.location_id
